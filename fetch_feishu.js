@@ -99,7 +99,8 @@ async function getFloatImages(accessToken, spreadsheetToken, sheetId) {
 async function downloadImage(accessToken, fileToken) {
     try {
         const filePath = path.join(avatarsDir, `${fileToken}.png`);
-        const publicUrl = `/avatars/${fileToken}.png`;
+        // Use relative path without leading slash, so it works better with base tags or relative resolution
+        const publicUrl = `avatars/${fileToken}.png`;
         
         // Check if file already exists to save bandwidth/time
         if (fs.existsSync(filePath)) {

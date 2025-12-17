@@ -58,10 +58,14 @@ export default function Settings() {
           const cleanBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
 
           const processedData = data.map(p => {
-              if (p.avatar && p.avatar.startsWith('/')) {
-                  // If it's a relative path starting with /, construct a full URL
-                  // Using window.location.origin + cleanBasePath
-                  return { ...p, avatar: `${window.location.origin}${cleanBasePath}${p.avatar}` };
+              // Now that JSON has relative paths "avatars/xxx.png", we just need to prepend the cleanBasePath
+              // If it starts with avatars/, we prepend cleanBasePath/
+              if (p.avatar && !p.avatar.startsWith('http') && !p.avatar.startsWith('data:')) {
+                   // If cleanBasePath is empty (dev), use /, else use /anz-lottery/
+                   const prefix = cleanBasePath ? `${cleanBasePath}/` : '/';
+                   // Avoid double slash if p.avatar starts with /
+                   const cleanAvatar = p.avatar.startsWith('/') ? p.avatar.slice(1) : p.avatar;
+                   return { ...p, avatar: `${window.location.origin}${prefix}${cleanAvatar}` };
               }
               return p;
           });
