@@ -12,19 +12,42 @@ import { Participant } from './types';
 
 // Component to handle auto-loading of Feishu data
 const AutoDataLoader = () => {
-  const { setParticipants } = useLotteryStore();
+  const { setParticipants, setPrizes, clearWinners } = useLotteryStore();
   const { addToast } = useToastStore();
 
   useEffect(() => {
     const loadFeishuData = async () => {
       try {
         // Always try to fetch the latest data from the static JSON file
-        const response = await fetch('/participants_from_feishu.json?t=' + Date.now());
+        // Ensure path handles BASE_URL correctly if needed, but usually public files are at root relative
+        const basePath = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
+        // Remove trailing slash from basePath if present to avoid double slash
+        const cleanBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+        
+        const response = await fetch(`${cleanBasePath}/participants_from_feishu.json?t=` + Date.now());
         if (response.ok) {
           const data: Participant[] = await response.json();
-          // Only update if data is different or empty
+          // Force update if we have data, regardless of current state to ensure sync
           if (data.length > 0) {
             setParticipants(data);
+            
+            // Auto-generate default prizes based on participants count
+            // This ensures we have a default prize setup even on fresh load
+            const prizeColors = [
+              '#FF0000', '#FFD700', '#FFA500', '#FF69B4', '#00FFFF', 
+              '#32CD32', '#9370DB', '#FF00FF', '#FF7F50', '#40E0D0'
+            ];
+            const defaultPrizes = Array.from({ length: data.length }).map((_, i) => ({
+              id: crypto.randomUUID(),
+              name: `${i + 1}`,
+              count: 1,
+              remaining: 1,
+              color: prizeColors[i % prizeColors.length]
+            }));
+            // We set default prizes and clear winners to ensure clean state on auto-load
+            setPrizes(defaultPrizes);
+            clearWinners();
+            
             console.log(`Auto-loaded ${data.length} participants from Feishu data source`);
           }
         } else {
@@ -38,7 +61,7 @@ const AutoDataLoader = () => {
     };
 
     loadFeishuData();
-  }, [setParticipants, addToast]); // Run once on mount
+  }, [setParticipants, setPrizes, clearWinners, addToast]); // Run once on mount
 
   return null;
 };
