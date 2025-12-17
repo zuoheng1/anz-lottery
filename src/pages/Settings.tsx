@@ -213,7 +213,7 @@ export default function Settings() {
             <h2 className="text-2xl font-semibold">奖品配置</h2>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-4 hidden">
             <div className="flex gap-2">
               <Input 
                 placeholder="奖品名称 (如: 1号奖品)" 
