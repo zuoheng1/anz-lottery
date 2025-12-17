@@ -44,7 +44,6 @@ export default function Settings() {
               throw new Error(`Failed to load Feishu data: ${response.status}`);
           }
           const data: Participant[] = await response.json();
-          setParticipants(data);
           
           // Auto-generate prizes based on participant count (One per person)
           // Festive Bright Colors
@@ -53,7 +52,21 @@ export default function Settings() {
             '#32CD32', '#9370DB', '#FF00FF', '#FF7F50', '#40E0D0'
           ];
           
-          const defaultPrizes = Array.from({ length: data.length }).map((_, i) => ({
+          // Prepend BASE_URL to avatar paths if they are relative (start with /) and not already prefixed
+          // Ensure path handles BASE_URL correctly if needed, but usually public files are at root relative
+          const basePath = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
+          const cleanBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+
+          const processedData = data.map(p => {
+              if (p.avatar && p.avatar.startsWith('/') && !p.avatar.startsWith(cleanBasePath)) {
+                  return { ...p, avatar: cleanBasePath + p.avatar };
+              }
+              return p;
+          });
+
+          setParticipants(processedData);
+          
+          const defaultPrizes = Array.from({ length: processedData.length }).map((_, i) => ({
             id: crypto.randomUUID(),
             name: `${i + 1}`,
             count: 1,
@@ -61,11 +74,21 @@ export default function Settings() {
             color: prizeColors[i % prizeColors.length]
           }));
           
+          // Only update prizes if current prizes list is empty or matches previous auto-gen logic
+          // But user requirement says: "线上版本我还是没有参与者，线上从feishu_data.json获取参与者数据"
+          // Implying we should sync. 
+          // If the user wants to keep prizes configuration manual, we might not want to overwrite it every time.
+          // However, previous logic was overwriting it. 
+          // Let's check if we should overwrite prizes. 
+          // The prompt says "即使在线上出现点击飞书同步，也提醒去本地拉取打包".
+          // The sync button now just reloads static JSON.
+          // Let's keep the logic consistent with previous behavior: overwrite prizes on sync.
+          
           setPrizes(defaultPrizes);
           // Clear previous winners to avoid conflicts with new prize IDs
           clearWinners(); 
           
-          addToast(`成功加载 ${data.length} 位参与者，并已重置奖品配置`, 'success');
+          addToast(`成功加载 ${processedData.length} 位参与者，并已重置奖品配置`, 'success');
       } catch (error) {
           console.error('Import failed:', error);
           addToast('加载失败，请查看控制台', 'error');
