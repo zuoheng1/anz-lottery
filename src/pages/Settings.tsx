@@ -89,6 +89,11 @@ export default function Settings() {
           clearWinners(); 
           
           addToast(`成功加载 ${processedData.length} 位参与者，并已重置奖品配置`, 'success');
+          
+          // Show tip for online users to sync properly
+          if (import.meta.env.PROD) {
+              addToast('线上环境请确保已在本地拉取最新数据并打包发布', 'info');
+          }
       } catch (error) {
           console.error('Import failed:', error);
           addToast('加载失败，请查看控制台', 'error');
