@@ -10,7 +10,7 @@ export const NotaryPublic = () => {
   const synth = useRef<SpeechSynthesis | null>(null);
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
 
-  const statement = "咳咳，试麦，试麦。各位 ANZ 的小伙伴们，晚上好！我是本次年会特邀的，莫得感情的 AI 公证员。兹证明：本次 ANZ Year End Party 抽奖，在风景优美、同时也非常隐蔽的——一苗山房森林美学聚会庄园举行。经由本 AI 的24小时无死角盯梢，我敢用我的 CPU 发誓：这台扭蛋机，绝对没有黑幕！没有后门！老板想中奖也得看我的算法！所有结果，纯属天意。我宣布：抽奖有效！祝大家锦鲤附体，大奖拿来吧你！";
+  const statement = "咳咳，试麦，试麦。各位 ANZ 的小伙伴们，晚上好！我是本次年会特邀的，莫得感情的 AI 公证员。兹证明：本次 ANZ Year End Party 抽奖，在风景优美、同时也非常隐蔽的——一亩山房森林美学聚会庄园举行。经由本 AI 的24小时无死角盯梢，我敢用我的 CPU 发誓：这台扭蛋机，绝对没有黑幕！没有后门！老板想中奖也得看我的算法！所有结果，纯属天意。我宣布：抽奖有效！祝大家锦鲤附体，大奖拿来吧你！";
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -134,7 +134,7 @@ export const NotaryPublic = () => {
                     </div>
                     <div className="text-center">
                         <div className="text-zinc-500 font-bold text-xs uppercase tracking-widest mb-1">AI Notary Public</div>
-                        <div className="text-zinc-500 font-medium text-sm mt-1">一苗山房森林美学聚会庄园</div>
+                        <div className="text-zinc-500 font-medium text-sm mt-1">一亩山房森林美学聚会庄园</div>
                     </div>
                 </div>
 
