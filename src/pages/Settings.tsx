@@ -181,8 +181,8 @@ export default function Settings() {
             <span className="text-zinc-400 text-sm">当前: {participants.length} 人</span>
           </div>
           
-          <div className="space-y-4 hidden">
-            <div className="flex gap-4">
+          <div className="space-y-4">
+            <div className="flex gap-4 hidden">
               <Button onClick={handleFeishuImport} variant="secondary" className="w-full bg-gradient-to-r from-[#4ade80] to-[#22c55e] text-black border border-zinc-300 shadow">
                 <CloudDownload className="mr-2 h-4 w-4" />
                 飞书同步
@@ -213,8 +213,8 @@ export default function Settings() {
             <h2 className="text-2xl font-semibold">奖品配置</h2>
           </div>
           
-          <div className="space-y-4 hidden">
-            <div className="flex gap-2">
+          <div className="space-y-4">
+            <div className="flex gap-2 hidden">
               <Input 
                 placeholder="奖品名称 (如: 1号奖品)" 
                 value={newPrize.name}
