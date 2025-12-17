@@ -37,6 +37,27 @@ export default function Settings() {
       try {
           addToast('正在重新加载数据...', 'info');
           
+          // 1. Try to trigger server-side sync (ONLY in Dev mode)
+          if (import.meta.env.DEV) {
+            try {
+              addToast('开发环境：正在触发飞书同步...', 'info');
+              // Vite dev server uses base path for API proxy too
+              const apiPath = import.meta.env.BASE_URL === '/' ? '/api/sync-feishu' : `${import.meta.env.BASE_URL}api/sync-feishu`;
+              const syncRes = await fetch(apiPath, { method: 'POST' });
+              
+              if (syncRes.ok) {
+                  console.log('Server sync triggered successfully');
+                  addToast('同步成功，正在刷新数据...', 'success');
+                  // Wait a bit for file write to complete effectively
+                  await new Promise(resolve => setTimeout(resolve, 1000));
+              } else {
+                  console.warn('Server sync endpoint not available or failed, falling back to static file');
+              }
+            } catch (e) {
+                console.warn('Server sync skipped:', e);
+            }
+          }
+
           // 2. Load the updated static file
           // Add timestamp to bust cache
           const response = await fetch('/participants_from_feishu.json?t=' + Date.now()); 

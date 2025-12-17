@@ -9,23 +9,28 @@ import { syncFeishuData } from './fetch_feishu.js';
 const feishuSyncPlugin = () => ({
   name: 'feishu-sync-server',
   configureServer(server: ViteDevServer) {
-    server.middlewares.use('/api/sync-feishu', async (req: IncomingMessage, res: ServerResponse, next: () => void) => {
-      if (req.method === 'POST') {
-        try {
-          console.log('Triggering Feishu Sync from Dev Server...');
-          await syncFeishuData();
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ success: true }));
-        } catch (error) {
-          console.error('Sync failed:', error);
-          res.statusCode = 500;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ success: false, error: String(error) }));
+    // Listen on both root path and base path to be safe
+    const paths = ['/api/sync-feishu', '/anz-lottery/api/sync-feishu'];
+    
+    paths.forEach(path => {
+      server.middlewares.use(path, async (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+        if (req.method === 'POST') {
+          try {
+            console.log(`Triggering Feishu Sync from Dev Server (${path})...`);
+            await syncFeishuData();
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ success: true }));
+          } catch (error) {
+            console.error('Sync failed:', error);
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ success: false, error: String(error) }));
+          }
+        } else {
+          next();
         }
-      } else {
-        next();
-      }
+      });
     });
   },
 });
