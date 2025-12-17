@@ -1,0 +1,86 @@
+[
+  {
+    "id": "eb5c016d-60e2-4bab-b73a-ae58a8afb7a7",
+    "name": "Zoey",
+    "department": "ANZ-Ops",
+    "avatar": "/avatars/Q1hIbbaLXocVXXx2K5ocZRzBnFg.png"
+  },
+  {
+    "id": "a3ab2d46-5eeb-4ef1-b6eb-465501890437",
+    "name": "Lily",
+    "department": "ANZ-Ops",
+    "avatar": "/avatars/DTfyb90HVoGqNxxX67ZcfnrJnK7.png"
+  },
+  {
+    "id": "3555834f-049b-44f5-8791-7169807b0a4e",
+    "name": "Lynn",
+    "department": "ANZ",
+    "avatar": "/avatars/APLVbXb51oHqPgxF5VVccc3pnLd.png"
+  },
+  {
+    "id": "8c50aa6a-c74d-47b3-abd0-45d61572219f",
+    "name": "Anita",
+    "department": "ANZ-Anker&Soundcore PCT",
+    "avatar": "/avatars/LlzCbL4x6o7qomxRBDGc46Bknpd.png"
+  },
+  {
+    "id": "60972095-c413-4cfa-8d09-8b11ad14bea7",
+    "name": "Joanne",
+    "department": "ANZ-Anker&Soundcore PCT",
+    "avatar": "/avatars/Jsfrb9EovoyZLYxjx44cR9zMnDO.png"
+  },
+  {
+    "id": "009c860a-0c53-4224-aae7-0caaa764e752",
+    "name": "Norah",
+    "department": "ANZ-Anker&Soundcore PCT",
+    "avatar": "/avatars/GsFtbnACmojTOhxurF8c9lFkn0D.png"
+  },
+  {
+    "id": "92159667-548c-49ad-9377-4bc2fcae0519",
+    "name": "Kelvin",
+    "department": "ANZ-Anker&Soundcore PCT",
+    "avatar": "/avatars/FAcHbqgR4o4lwBxbknFcXFtsnLd.png"
+  },
+  {
+    "id": "00535d1b-f77d-400f-bb2c-3e7145a646db",
+    "name": "Allen",
+    "department": "ANZ-Anker&Soundcore PCT",
+    "avatar": "/avatars/V476bjjBGoJLYVxf8hHceCtrnnd.png"
+  },
+  {
+    "id": "e9187ac3-369e-40f5-aefb-56a8309fe3c3",
+    "name": "Yong",
+    "department": "ANZ-Eufy PCT",
+    "avatar": "/avatars/PPJ5b5xUbozb6qxVrG9cVFaQnBc.png"
+  },
+  {
+    "id": "be6ee632-eb10-4fa2-ac87-d6768a9357b8",
+    "name": "Heng",
+    "department": "ANZ-Eufy PCT",
+    "avatar": "/avatars/DuF4bkXlzo00myxGKbwcfLXgnve.png"
+  },
+  {
+    "id": "740e958d-c484-455a-9580-3b6221ca7ce4",
+    "name": "Yoona",
+    "department": "ANZ-Ops",
+    "avatar": "/avatars/WragbYojLo1DyyxyybQcYDE3nPQ.png"
+  },
+  {
+    "id": "6515baf9-16e3-46ba-8978-8f7028e5374d",
+    "name": "Vickyy",
+    "department": "ANZ-DP & SP",
+    "avatar": "/avatars/Kt1SbQUYwoh16xxAMaec7nM9nHf.png"
+  },
+  {
+    "id": "c9f4bc08-e092-4343-b31b-e1f1388a2799",
+    "name": "Jennie",
+    "department": "ANZ-DP & SP",
+    "avatar": "/avatars/UwKQb2aZOoDdmQxhH5BcoIzjnXb.png"
+  },
+  {
+    "id": "1592e757-7542-4c92-b8e7-0ef7ac242beb",
+    "name": "Mikiko",
+    "department": "ANZ-DP & SP",
+    "avatar": "/avatars/FuH9bMChkoWwvLxGk5ZcXEVBnYg.png"
+  }
+]
