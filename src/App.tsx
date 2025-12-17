@@ -29,7 +29,19 @@ const AutoDataLoader = () => {
           const data: Participant[] = await response.json();
           // Force update if we have data, regardless of current state to ensure sync
           if (data.length > 0) {
-            setParticipants(data);
+            // Prepend BASE_URL to avatar paths if they are relative (start with /) and not already prefixed
+            const processedData = data.map(p => {
+              if (p.avatar && p.avatar.startsWith('/') && !p.avatar.startsWith(cleanBasePath + '/')) {
+                 // Check if cleanBasePath is empty to avoid double slash if avatar starts with /
+                 if (cleanBasePath === '') {
+                     return p;
+                 }
+                 return { ...p, avatar: cleanBasePath + p.avatar };
+              }
+              return p;
+            });
+
+            setParticipants(processedData);
             
             // Auto-generate default prizes based on participants count
             // This ensures we have a default prize setup even on fresh load
@@ -37,7 +49,7 @@ const AutoDataLoader = () => {
               '#FF0000', '#FFD700', '#FFA500', '#FF69B4', '#00FFFF', 
               '#32CD32', '#9370DB', '#FF00FF', '#FF7F50', '#40E0D0'
             ];
-            const defaultPrizes = Array.from({ length: data.length }).map((_, i) => ({
+            const defaultPrizes = Array.from({ length: processedData.length }).map((_, i) => ({
               id: crypto.randomUUID(),
               name: `${i + 1}`,
               count: 1,
@@ -48,7 +60,7 @@ const AutoDataLoader = () => {
             setPrizes(defaultPrizes);
             clearWinners();
             
-            console.log(`Auto-loaded ${data.length} participants from Feishu data source`);
+            console.log(`Auto-loaded ${processedData.length} participants from Feishu data source`);
           }
         } else {
              console.warn(`Feishu data file not found (Status: ${response.status}). This is normal on first load if script is still running.`);

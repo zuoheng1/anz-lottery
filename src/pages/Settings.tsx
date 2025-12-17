@@ -93,6 +93,9 @@ export default function Settings() {
           // Show tip for online users to sync properly
           if (import.meta.env.PROD) {
               addToast('线上环境请确保已在本地拉取最新数据并打包发布', 'info');
+          } else {
+              // In development, also suggest checking terminal
+              addToast('本地环境请检查终端同步日志', 'info');
           }
       } catch (error) {
           console.error('Import failed:', error);
