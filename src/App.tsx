@@ -29,14 +29,12 @@ const AutoDataLoader = () => {
           const data: Participant[] = await response.json();
           // Force update if we have data, regardless of current state to ensure sync
           if (data.length > 0) {
-            // Prepend BASE_URL to avatar paths if they are relative (start with /) and not already prefixed
+            // Force absolute URLs for avatars to ensure they work regardless of deployment path
             const processedData = data.map(p => {
-              if (p.avatar && p.avatar.startsWith('/') && !p.avatar.startsWith(cleanBasePath + '/')) {
-                 // Check if cleanBasePath is empty to avoid double slash if avatar starts with /
-                 if (cleanBasePath === '') {
-                     return p;
-                 }
-                 return { ...p, avatar: cleanBasePath + p.avatar };
+              if (p.avatar && p.avatar.startsWith('/')) {
+                  // If it's a relative path starting with /, construct a full URL
+                  // Using window.location.origin + cleanBasePath
+                  return { ...p, avatar: `${window.location.origin}${cleanBasePath}${p.avatar}` };
               }
               return p;
             });

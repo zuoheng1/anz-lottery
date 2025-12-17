@@ -58,8 +58,10 @@ export default function Settings() {
           const cleanBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
 
           const processedData = data.map(p => {
-              if (p.avatar && p.avatar.startsWith('/') && !p.avatar.startsWith(cleanBasePath)) {
-                  return { ...p, avatar: cleanBasePath + p.avatar };
+              if (p.avatar && p.avatar.startsWith('/')) {
+                  // If it's a relative path starting with /, construct a full URL
+                  // Using window.location.origin + cleanBasePath
+                  return { ...p, avatar: `${window.location.origin}${cleanBasePath}${p.avatar}` };
               }
               return p;
           });
