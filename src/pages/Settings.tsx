@@ -36,22 +36,8 @@ export default function Settings() {
 
   const handleFeishuImport = async () => {
       try {
-          addToast('正在同步飞书数据...', 'info');
+          addToast('正在重新加载数据...', 'info');
           
-          // 1. Try to trigger server-side sync (works in Dev mode with custom middleware)
-          try {
-            const syncRes = await fetch('/api/sync-feishu', { method: 'POST' });
-            if (syncRes.ok) {
-                console.log('Server sync triggered successfully');
-                // Wait a bit for file write to complete effectively
-                await new Promise(resolve => setTimeout(resolve, 500));
-            } else {
-                console.warn('Server sync endpoint not available or failed, falling back to static file');
-            }
-          } catch (e) {
-              console.warn('Server sync skipped:', e);
-          }
-
           // 2. Load the updated static file
           // Add timestamp to bust cache
           const response = await fetch('/participants_from_feishu.json?t=' + Date.now()); 
@@ -82,8 +68,8 @@ export default function Settings() {
           
           addToast(`成功加载 ${data.length} 位参与者，并已重置奖品配置`, 'success');
       } catch (error) {
-          console.error('Feishu import failed:', error);
-          addToast('导入失败，请查看控制台', 'error');
+          console.error('Import failed:', error);
+          addToast('加载失败，请查看控制台', 'error');
       }
   };
 
