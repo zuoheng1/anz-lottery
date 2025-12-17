@@ -15,7 +15,6 @@ export default function Settings() {
     prizes, 
     setPrizes, 
     resetLottery,
-    clearParticipants,
     clearWinners
   } = useLotteryStore();
 
@@ -104,20 +103,6 @@ export default function Settings() {
     });
   };
 
-  const handleClearAll = () => {
-    setConfirmModal({
-        isOpen: true,
-        title: '清空所有数据',
-        description: '确定要清空所有数据（包括参与者和奖品）吗？此操作不可恢复。',
-        onConfirm: () => {
-            clearParticipants();
-            setPrizes([]);
-            clearWinners();
-            addToast('所有数据已清空', 'success');
-        }
-    });
-  };
-
   return (
     <div className="container mx-auto p-8 space-y-8 pb-24 pt-24">
       <h1 className="text-4xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
@@ -127,10 +112,6 @@ export default function Settings() {
         <Button variant="outline" onClick={handleReset} className="border-yellow-300 text-yellow-600 hover:bg-yellow-100">
           <RefreshCw className="mr-2 h-4 w-4" />
           重置抽奖状态
-        </Button>
-        <Button variant="outline" onClick={handleClearAll} className="border-red-300 text-red-600 hover:bg-red-100">
-          <Trash2 className="mr-2 h-4 w-4" />
-          清空所有数据
         </Button>
       </div>
 
